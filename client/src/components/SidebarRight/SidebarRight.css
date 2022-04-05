@@ -1,0 +1,10 @@
+.sidebar-right {
+    display         : flex;
+    flex-direction  : column;
+    min-width       : 280px;
+    max-width       : 280px;
+    padding         : var(--padding-main);
+    background-color: var(--background-third);
+    position        : sticky;
+    top             : 150px;
+}
