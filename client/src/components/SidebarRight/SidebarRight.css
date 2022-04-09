@@ -7,4 +7,5 @@
     background-color: var(--background-third);
     position        : sticky;
     top             : 150px;
+    right           : 0;
 }

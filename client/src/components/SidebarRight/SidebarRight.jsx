@@ -3,6 +3,8 @@ import './SidebarRight.css'
 
 export default function SidebarRight() {
     return (
-        <div className='sidebar-right'>SidebarRight</div>
+        <div className='sidebar-right'>
+            s
+        </div>
     )
 }

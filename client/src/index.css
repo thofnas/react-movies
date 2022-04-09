@@ -7,7 +7,7 @@
 
   --padding-sides-main  : 4rem;
   --padding-top-main    : 3rem;
-  --movies-border-radius: 1.5rem;
+  --movies-border-radius: 1.2rem;
 }
 
 body {
@@ -28,4 +28,17 @@ h4,
 h5,
 h6 {
   margin: 0;
+}
+
+html,
+body,
+#root,
+.App,
+.container {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color          : var(--text-main)
 }

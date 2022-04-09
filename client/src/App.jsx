@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Routes,
   Route,
@@ -23,8 +23,7 @@ import SidebarRight from "./components/SidebarRight/SidebarRight"
 
 export default function App() {
   let location = useLocation();
-
-  const [isTypeMovies, setTypeMovies] = useState(true)
+  const { type } = useParams();
 
   let background = location.state && location.state.background
 
@@ -44,8 +43,12 @@ export default function App() {
         </Route>
         <Route path="*" element={<Navigate to={'/movies'} />} />
       </Routes>
+
       {background &&
-        <Route path={isTypeMovies ? 'movies/:id' : 'tv/:id'} element={<MovieModal />} />
+        <Routes>
+          <Route path='movies/:id' element={<MovieModal />} />
+          <Route path='tv/:id' element={<MovieModal />} />
+        </Routes>
       }
     </>
   )
@@ -70,7 +73,7 @@ function Layout() {
 function ProfileLayout() {
   return (
     <div className="App">
-      <div className="container">
+      <div className="container" style={{ backgroundColor: 'var(--background-secondary)' }}>
         <Header />
         <Outlet />
       </div>
