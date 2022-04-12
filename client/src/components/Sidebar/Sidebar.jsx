@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom'
 import './Sidebar.css'
 
 export default function Sidebar() {
     const [showMore, setShowMore] = useState(false)
     const [genres, setGenre] = useState([])
+    const [searchParams, setSearchParams] = useSearchParams()
+    const location = useLocation()
     const [selectedGenre, setSelectedGenre] = useState('')
     let navigate = useNavigate()
     let { type } = useParams()
@@ -18,11 +20,9 @@ export default function Sidebar() {
     }, [type])
 
     const genreClickHandler = (e) => {
-        setSelectedGenre({
-            id: e.target.id,
-            name: e.target.name
-        })
-        navigate(`/${type}/list?with_genres=${e.target.id}`)
+        setSelectedGenre(e.target.value)
+        searchParams.set('with_genres', e.target.id)
+        navigate(`/${type}/list?${searchParams}`)
     }
 
     return (

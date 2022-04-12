@@ -6,8 +6,36 @@
     padding               : 1.2rem;
 }
 
+.movies-list button {
+    background-color: var(--background-primary);
+    border-radius   : var(--movies-border-radius);
+    border          : 1px solid var(--background-primary);
+    color           : var(--text-primary);
+    font-size       : 1rem;
+    padding         : 0.5rem;
+    margin-left     : 0.5rem;
+    margin-right    : 0.5rem;
+    margin-bottom   : 0.5rem;
+    cursor          : pointer;
+}
+
+.movies-list-control {
+    display        : flex;
+    flex-direction : row;
+    justify-content: end;
+    align-items    : center;
+}
+
 .movies-list-content {
     display              : grid;
     grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     gap                  : 1.2rem;
+}
+
+.pages-control {
+    display        : flex;
+    flex-direction : row;
+    justify-content: center;
+    align-items    : center;
+    margin-top     : 2rem;
 }
