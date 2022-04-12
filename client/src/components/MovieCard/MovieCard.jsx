@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation, useSearchParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { usePalette } from 'react-palette'
@@ -9,15 +9,19 @@ import './MovieCard.css'
 export default function MovieCard({ poster_path, title, vote_average, id }) {
     let location = useLocation()
     const { type } = useParams()
+    const [searchParams] = useSearchParams()
     const IMAGE_URL = `https://image.tmdb.org/t/p/w500${poster_path}`
     const { data } = usePalette(IMAGE_URL)
 
     return (
         <Link
-            to={`/${type}/${id}`}
+            className='movie-card-link'
+            to={`/${type}/${id}${location?.search}`}
             state={{
-                background: location
+                background: location,
+                type: type
             }}
+            title={title}
         >
             < div className='movie-card'>
                 <div className="movie-card-image" style={{

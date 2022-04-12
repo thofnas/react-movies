@@ -3,12 +3,33 @@ import React from 'react'
 import DiscoverSection from '../DiscoverSection/DiscoverSection'
 import './MoviesDiscover.css'
 
-export default function MoviesDiscover({ MOVIES_LOCAL }) {
+export default function MoviesDiscover() {
+
+    const SECTIONS = [
+        {
+            title: 'Popular Movies',
+            queries: {
+                'sort_by': 'popularity.desc'
+            }
+        },
+        {
+            title: 'Top Rated Movies',
+            queries: {
+                'sort_by': 'vote_average.desc',
+                'vote_count.gte': '500'
+            }
+        }
+    ]
 
     return (
         <div className='discover'>
-            <DiscoverSection title={'Weekly Popular Movies'} moviesArray={MOVIES_LOCAL} />
-            <DiscoverSection title={'2 Weeks Popular Movies'} moviesArray={MOVIES_LOCAL} />
+            {SECTIONS.map(section => (
+                <DiscoverSection
+                    key={section?.title}
+                    title={section?.title}
+                    queries={section?.queries}
+                />
+            ))}
         </div>
     )
 }

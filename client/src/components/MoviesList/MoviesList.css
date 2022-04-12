@@ -2,8 +2,12 @@
     background-color      : var(--background-secondary);
     width                 : 100%;
     border-top-left-radius: var(--movies-border-radius);
-    display               : grid;
-    grid-template-columns : 1fr 1fr 1fr 1fr;
     align-items           : center;
-    padding               : var(--padding-main);
+    padding               : 1.2rem;
+}
+
+.movies-list-content {
+    display              : grid;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap                  : 1.2rem;
 }

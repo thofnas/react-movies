@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import './Sidebar.css'
 
 export default function Sidebar() {
     const [showMore, setShowMore] = useState(false)
     const [genres, setGenre] = useState([])
-    // const [searchParams] = useSearchParams()
+    const [selectedGenre, setSelectedGenre] = useState('')
+    let navigate = useNavigate()
+    let { type } = useParams()
 
-    // useEffect(() => {
-    //     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setGenre(data.genres)
-    //         })
-    // }, [])
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API}`)
+            .then(res => res.json())
+            .then(data => {
+                setGenre(data?.genres)
+            })
+    }, [type])
+
+    const genreClickHandler = (e) => {
+        setSelectedGenre({
+            id: e.target.id,
+            name: e.target.name
+        })
+        navigate(`/${type}/list?with_genres=${e.target.id}`)
+    }
 
     return (
         <div className="sidebar">
@@ -22,7 +32,14 @@ export default function Sidebar() {
                 <ul className={!showMore ? 'sidebar-show-less' : ''} style={{ marginBottom: "0rem" }}>
                     {genres.map((genre) => {
                         return (
-                            <li onClick={() => ''} key={genre.id}>{genre.name}</li>
+                            <li
+                                onClick={genreClickHandler}
+                                id={genre?.id}
+                                name={genre?.name}
+                                key={genre?.id}
+                            >
+                                {genre?.name}
+                            </li>
                         )
                     })}
                 </ul>

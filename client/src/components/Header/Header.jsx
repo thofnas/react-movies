@@ -18,8 +18,8 @@ export default function Header() {
         searchInput.current.focus()
     }
 
-    let color = type === 'movies' ? '#0066ee' : '#ee1100'
-    if (type !== 'movies' && type !== 'tv') color = '#444444'
+    let color = type === 'movie' ? '#0066ee' : '#ee1100'
+    if (type !== 'movie' && type !== 'tv') color = '#444444'
 
 
     return (
@@ -60,7 +60,7 @@ export default function Header() {
                     </button>
                 </div>
                 <div className="header-container">
-                    <NavLink to='/movies'>Movies</NavLink>
+                    <NavLink to='/movie'>Movies</NavLink>
                     <NavLink to='/tv'>TV Shows</NavLink>
                     {isSigned ?
                         <>

@@ -1,8 +1,13 @@
+.movie-card-link {
+    transition-duration: 200ms;
+}
+
 .movie-card {
     display        : flex;
     flex-direction : column;
     justify-content: space-between;
     cursor         : pointer;
+    height         : 100%;
 }
 
 .movie-card:hover img {
@@ -20,4 +25,8 @@
     height    : 100%;
     transform : scale(1);
     transition: .3s ease-in-out;
+}
+
+.movie-card-title span {
+    white-space: nowrap;
 }
