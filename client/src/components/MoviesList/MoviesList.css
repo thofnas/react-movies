@@ -28,7 +28,8 @@
 
 .movies-list-content {
     display              : grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
     gap                  : 1.2rem;
 }
 

@@ -11,25 +11,34 @@
 }
 
 .movie-card:hover .img {
-    transform: scale(1.05);
+    transform: scale(1.05, 1.05);
 }
 
 .movie-card-image {
     overflow     : hidden;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
+    z-index: 10;
 }
 
 .movie-card-image>.img {
     position           : relative;
-    height             : 300px;
-    width              : 100%;
+    height             : 400px;
     background-size    : contain;
     background-position: top top;
-    transform          : scale(1);
+    transform          : scale(1, 1);
     transition         : .3s ease-in-out;
 }
 
+.movie-card-title {
+    overflow: hidden;
+text-overflow: ellipsis;
+    width: 100%;
+    z-index: 0;
+}
+
+
 .movie-card-title span {
     white-space: nowrap;
+    z-index: -10;
 }
