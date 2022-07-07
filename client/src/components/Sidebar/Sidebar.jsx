@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom'
 import './Sidebar.css'
@@ -12,11 +13,14 @@ export default function Sidebar() {
     let { type } = useParams()
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API}`)
-            .then(res => res.json())
-            .then(data => {
-                setGenre(data?.genres)
+        axios.get(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API}`)
+            .then(res => {
+                setGenre(res?.data?.genres)
             })
+            .catch(err => {
+                console.log(err)
+            })
+
     }, [type])
 
     const genreClickHandler = (e) => {

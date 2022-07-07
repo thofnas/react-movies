@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -9,8 +9,13 @@ import './Header.css'
 
 export default function Header() {
     const [searchInputText, setSearchInputText] = React.useState('')
-
+    const navigate = useNavigate()
     const { type } = useParams()
+
+    useEffect(() => {
+        if (type !== 'movie' && type !== 'tv') navigate('/movie')
+    })
+
     const searchInput = useRef()
 
     const isSigned = true
@@ -20,7 +25,6 @@ export default function Header() {
 
     let color = type === 'movie' ? '#0066ee' : '#ee1100'
     if (type !== 'movie' && type !== 'tv') color = '#444444'
-
 
     return (
         <header>

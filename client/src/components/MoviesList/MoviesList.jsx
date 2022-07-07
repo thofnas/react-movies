@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useLocation, useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import scrollIntoView from 'scroll-into-view-if-needed'
 
@@ -17,11 +18,12 @@ export default function MoviesList() {
 
     useEffect(() => {
         const url = `https://api.themoviedb.org/3/discover/${type}?api_key=${process.env.REACT_APP_API}&${location.search.substring(1)}&page=${page}`
-        console.log(url);
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                setMovies(data?.results)
+        console.log(url)
+        axios.get(url)
+            .then(res => {
+                setMovies(res?.data?.results)
+            }).catch(err => {
+                console.log(err)
             })
     }, [location, page])
 
@@ -59,7 +61,7 @@ export default function MoviesList() {
                         <MovieCard
                             key={movie?.id}
                             id={movie?.id}
-                            title={movie?.title}
+                            title={movie?.title || movie?.name}
                             poster_path={movie?.poster_path}
                             vote_average={movie?.vote_average}
                         />

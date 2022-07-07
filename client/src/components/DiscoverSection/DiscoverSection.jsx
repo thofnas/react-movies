@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -23,11 +24,12 @@ export default function DiscoverSection({ title, queries }) {
     }
 
     useEffect(() => {
-        fetch(url + queryString(queries, true))
-            .then(response => response.json())
-            .then(data => {
-                setMoviesSection(data?.results)
-            });
+        axios.get(url + queryString(queries, true))
+            .then(res => {
+                setMoviesSection(res?.data?.results)
+            }).catch(err => {
+                console.log(err)
+            })
     }, [type])
 
     return (
@@ -42,7 +44,7 @@ export default function DiscoverSection({ title, queries }) {
                         <MovieCard
                             key={movie?.id}
                             id={movie?.id}
-                            title={movie?.title}
+                            title={movie?.title || movie?.name}
                             poster_path={movie?.poster_path}
                             vote_average={movie?.vote_average}
                         />
