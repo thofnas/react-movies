@@ -3,8 +3,12 @@ import {
   Route,
   Outlet,
   useLocation,
+  useNavigate,
   Navigate,
+  useParams
 } from "react-router-dom";
+
+import { useEffect } from "react";
 
 import Header from './components/Header/Header'
 import MoviesList from './components/MoviesList/MoviesList'
@@ -15,6 +19,7 @@ import Error from './components/Error/Error'
 import Sidebar from "./components/Sidebar/Sidebar"
 import Profile from "./components/Profile/Profile"
 import SidebarRight from "./components/SidebarRight/SidebarRight"
+import { SkeletonTheme } from "react-loading-skeleton";
 
 
 export default function App() {
@@ -23,7 +28,7 @@ export default function App() {
   let background = location.state && location.state.background
 
   return (
-    <>
+    <SkeletonTheme baseColor="#222128" highlightColor="#3A393E">
       <Routes location={background || location}>
         <Route path=":type" element={<Layout />}>
           <Route index element={<MoviesDiscover />} />
@@ -45,11 +50,17 @@ export default function App() {
           <Route path='tv/:id' element={<MovieModal />} />
         </Routes>
       }
-    </>
+    </SkeletonTheme>
   )
 }
 
 function Layout() {
+  const { type } = useParams()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (type !== 'movie' && type !== 'tv') navigate('/movie')
+  })
   return (
     <div className="App">
       <Header />

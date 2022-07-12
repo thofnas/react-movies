@@ -5,6 +5,7 @@ import scrollIntoView from 'scroll-into-view-if-needed'
 
 import './MoviesList.css'
 import MovieCard from '../MovieCard/MovieCard'
+import MovieCardSkeleton from '../MovieCardSkeleton/MovieCardSkeleton'
 
 export default function MoviesList() {
     const location = useLocation()
@@ -14,14 +15,17 @@ export default function MoviesList() {
     const [page, setPage] = useState(1)
     const [sorting, setSorting] = useState(searchParams.get('sort_by') ? searchParams.get('sort_by') : 'popularity.desc')
     const { type } = useParams()
+    const [loading, setLoading] = useState(true)
     const appElement = document.getElementsByClassName('App')[0]
 
     useEffect(() => {
+        setLoading(true)
         const url = `https://api.themoviedb.org/3/discover/${type}?api_key=${process.env.REACT_APP_API}&${location.search.substring(1)}&page=${page}`
         console.log(url)
         axios.get(url)
             .then(res => {
                 setMovies(res?.data?.results)
+                setLoading(false)
             }).catch(err => {
                 console.log(err)
             })
@@ -30,11 +34,14 @@ export default function MoviesList() {
     const sortingHandler = (e) => {
         setSorting(e.target.value)
         searchParams.set('sort_by', e.target.value)
+
+        // add counts of votes for better results in vote_average
         e.target.value === 'vote_average.desc'
             ? searchParams.set('vote_count.gte', '500')
             : searchParams.delete('vote_count.gte')
+
         navigate(`/${type}/list?${searchParams}`)
-        e.target.className = 'active'
+        e.target.className = 'active-sort'
     }
 
     const pageHandler = (e) => {
@@ -53,20 +60,19 @@ export default function MoviesList() {
             <div className='movies-list-control'>
                 <button onClick={sortingHandler} value='vote_average.desc'>Top rated</button>
                 <button onClick={sortingHandler} value='popularity.desc'>Popular</button>
+                <button onClick={sortingHandler} value='release_date.desc'>By date</button>
             </div>
             <div className='movies-list-content'>
-
-                {
-                    movies.map(movie => (
-                        <MovieCard
-                            key={movie?.id}
-                            id={movie?.id}
-                            title={movie?.title || movie?.name}
-                            poster_path={movie?.poster_path}
-                            vote_average={movie?.vote_average}
-                        />
-                    ))
-                }
+                {loading && <MovieCardSkeleton count={10} />}
+                {movies.map(movie => (
+                    <MovieCard
+                        key={movie?.id}
+                        id={movie?.id}
+                        title={movie?.title || movie?.name}
+                        poster_path={movie?.poster_path}
+                        vote_average={movie?.vote_average}
+                    />
+                ))}
             </div>
             <div className='pages-control'>
                 {page > 1

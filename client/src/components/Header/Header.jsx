@@ -1,20 +1,15 @@
 import React, { useRef, useEffect } from 'react'
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
 
-
 export default function Header() {
     const [searchInputText, setSearchInputText] = React.useState('')
-    const navigate = useNavigate()
     const { type } = useParams()
-
-    useEffect(() => {
-        if (type !== 'movie' && type !== 'tv') navigate('/movie')
-    })
 
     const searchInput = useRef()
 
@@ -29,7 +24,7 @@ export default function Header() {
     return (
         <header>
             <div className="header-logo">
-                <NavLink to={`/${type ? type : 'movies'}`}
+                <NavLink to={`/${type ? type : 'movie'}`}
                     style={{
                         textShadow: `0px 0px 50px ${color}`
 

@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import MovieCard from '../MovieCard/MovieCard'
+import MovieCardSkeleton from '../MovieCardSkeleton/MovieCardSkeleton'
 import './DiscoverSection.css'
 
 export default function DiscoverSection({ title, queries }) {
     const { type } = useParams()
     const [moviesSection, setMoviesSection] = useState([])
+    const [loading, setLoading] = useState(true)
     const url = `https://api.themoviedb.org/3/discover/${type}?api_key=${process.env.REACT_APP_API}`
 
     const queryString = (queries, isForApi) => {
@@ -24,9 +26,11 @@ export default function DiscoverSection({ title, queries }) {
     }
 
     useEffect(() => {
+        setLoading(true)
         axios.get(url + queryString(queries, true))
             .then(res => {
                 setMoviesSection(res?.data?.results)
+                setLoading(false)
             }).catch(err => {
                 console.log(err)
             })
@@ -39,17 +43,16 @@ export default function DiscoverSection({ title, queries }) {
                 <Link to={`/${type}/list${queryString(queries, false)}`}>See more</Link>
             </div>
             <div className="discover-section-list">
-                {
-                    moviesSection?.slice(0, 4).map(movie => (
-                        <MovieCard
-                            key={movie?.id}
-                            id={movie?.id}
-                            title={movie?.title || movie?.name}
-                            poster_path={movie?.poster_path}
-                            vote_average={movie?.vote_average}
-                        />
-                    ))
-                }
+                {loading && <MovieCardSkeleton count={4} />}
+                {moviesSection?.slice(0, 4).map(movie => (
+                    <MovieCard
+                        key={movie?.id}
+                        id={movie?.id}
+                        title={movie?.title || movie?.name}
+                        poster_path={movie?.poster_path}
+                        vote_average={movie?.vote_average}
+                    />
+                ))}
             </div>
         </div>
     )

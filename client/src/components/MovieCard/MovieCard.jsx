@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useParams, useLocation, useSearchParams } from 'react-router-dom'
 import PreloadImage from 'react-preload-image'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { usePalette } from 'react-palette'
@@ -25,9 +26,10 @@ export default function MovieCard({ poster_path, title, vote_average, id }) {
             title={title}
         >
             < div className='movie-card'>
-                <div className="movie-card-image" style={{
-                    boxShadow: `0px 8px 32px -7px ${data?.darkVibrant}`
-                }}>
+                <div className="movie-card-image"
+                    style={{
+                        boxShadow: `0px 8px 32px -7px ${data?.darkVibrant}`
+                    }}>
 
                     <PreloadImage
                         style={{
