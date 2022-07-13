@@ -68,8 +68,7 @@ export default function MoviesList() {
                 <button className={sorting === 'release_date.desc' ? 'active-sort' : null} onClick={sortingHandler} value='release_date.desc'>By date</button>
             </div>
             <div className='movies-list-content'>
-                {loading && <MovieCardSkeleton count={10} />}
-                {movies.map(movie => (
+                {loading ? <MovieCardSkeleton count={10} /> : movies.map(movie => (
                     <MovieCard
                         key={movie?.id}
                         id={movie?.id}
@@ -78,6 +77,7 @@ export default function MoviesList() {
                         vote_average={movie?.vote_average}
                     />
                 ))}
+                
             </div>
             <div className='pages-control'>
                 {page > 1
