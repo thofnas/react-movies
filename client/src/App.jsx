@@ -28,32 +28,35 @@ export default function App() {
   let background = location.state && location.state.background
 
   return (
-    <SkeletonTheme baseColor="#222128" highlightColor="#3A393E">
-      <AnimatePresence>
-        <Routes location={background || location} >
-          <Route path=":type" element={<Layout />}>
-            <Route index element={<MoviesDiscover />} />
-            <Route path="list" element={<MoviesList />} />
-            <Route path=":id" element={<Movie />} />
-            <Route path="*" element={<Error />} />
-          </Route>
-          <Route path="profile" element={<ProfileLayout />}>
-            <Route index element={<Profile />} />
-            <Route path="watchlist" element={<Profile />} />
-            <Route path="*" element={<Error />} />
-          </Route>
-          <Route path="*" element={<Navigate to={'/movie'} />} />
-        </Routes>
-
-        {background &&
-          <Routes>
-            <Route path='movie/:id' element={<MovieModal />} />
-            <Route path='tv/:id' element={<MovieModal />} />
+    <>
+      <SkeletonTheme baseColor="#222128" highlightColor="#3A393E">
+        <AnimatePresence>
+          <Routes location={background || location} key={location}>
+            <Route path=":type" element={<Layout />}>
+              <Route index element={<MoviesDiscover />} />
+              <Route path="list" element={<MoviesList />} />
+              <Route path=":id" element={<Movie />} />
+              <Route path="*" element={<Error />} />
+            </Route>
+            <Route path="profile" element={<ProfileLayout />}>
+              <Route index element={<Profile />} />
+              <Route path="watchlist" element={<Profile />} />
+              <Route path="*" element={<Error />} />
+            </Route>
+            <Route path="*" element={<Navigate to={'/movie'} />} />
           </Routes>
-        }
-      </AnimatePresence>
 
-    </SkeletonTheme>
+          {
+            background &&
+            <Routes>
+              <Route path='movie/:id' element={<MovieModal />} />
+              <Route path='tv/:id' element={<MovieModal />} />
+            </Routes>
+          }
+        </AnimatePresence>
+
+      </SkeletonTheme>
+    </>
   )
 }
 
