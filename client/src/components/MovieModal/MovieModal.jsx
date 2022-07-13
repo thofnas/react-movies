@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dialog } from '@reach/dialog'
 import "@reach/dialog/styles.css"
+import { motion } from 'framer-motion'
 
 import './MovieModal.css'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -14,7 +15,14 @@ export default function MovieModal() {
             className='modal'
             aria-labelledby='label'
             onDismiss={() => navigate(-1)}>
-            <Movie typeB={location?.state?.type} />
-        </Dialog>
+            <motion.div
+                initial={{ x: "50vw", opacity: 0 }}
+                animate={{ x: "calc(100vw - 100vw)", opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
+                <Movie typeB={location?.state?.type} />
+
+            </motion.div>
+        </Dialog >
     )
 }

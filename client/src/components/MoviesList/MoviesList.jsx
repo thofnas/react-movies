@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useLocation, useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import scrollIntoView from 'scroll-into-view-if-needed'
+import { motion } from 'framer-motion'
 
 import './MoviesList.css'
 import MovieCard from '../MovieCard/MovieCard'
@@ -19,7 +20,6 @@ export default function MoviesList() {
     const appElement = document.getElementsByClassName('App')[0]
 
     useEffect(() => {
-        setLoading(true)
         const url = `https://api.themoviedb.org/3/discover/${type}?api_key=${process.env.REACT_APP_API}&${location.search.substring(1)}&page=${page}`
         console.log(url)
         axios.get(url)
@@ -32,6 +32,8 @@ export default function MoviesList() {
     }, [location, page])
 
     const sortingHandler = (e) => {
+        setLoading(true)
+        setPage(1)
         setSorting(e.target.value)
         searchParams.set('sort_by', e.target.value)
 
@@ -42,9 +44,11 @@ export default function MoviesList() {
 
         navigate(`/${type}/list?${searchParams}`)
         e.target.className = 'active-sort'
+        setLoading(false)
     }
 
     const pageHandler = (e) => {
+        setLoading(true)
         e.target.value === 'next'
             ? setPage(page + 1)
             : setPage(page - 1)
@@ -53,14 +57,15 @@ export default function MoviesList() {
             behavior: 'smooth',
             block: 'start'
         })
+        setLoading(false)
     }
 
     return (
         <div className='movies-list'>
             <div className='movies-list-control'>
-                <button onClick={sortingHandler} value='vote_average.desc'>Top rated</button>
-                <button onClick={sortingHandler} value='popularity.desc'>Popular</button>
-                <button onClick={sortingHandler} value='release_date.desc'>By date</button>
+                <button className={sorting === 'vote_average.desc' ? 'active-sort' : null} onClick={sortingHandler} value='vote_average.desc'>Top rated</button>
+                <button className={sorting === 'popularity.desc' ? 'active-sort' : null} onClick={sortingHandler} value='popularity.desc'>Popular</button>
+                <button className={sorting === 'release_date.desc' ? 'active-sort' : null} onClick={sortingHandler} value='release_date.desc'>By date</button>
             </div>
             <div className='movies-list-content'>
                 {loading && <MovieCardSkeleton count={10} />}

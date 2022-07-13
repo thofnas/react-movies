@@ -1,6 +1,6 @@
 .modal {
-    position: relative;
-    background-color: var(--background-third);
-    border-radius   : var(--movies-border-radius);
-    z-index: 999999;
+    position        : relative;
+    background-color: transparent;
+    z-index         : 999999;
+    padding         : 0;
 }

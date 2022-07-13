@@ -1,9 +1,9 @@
-.sidebar-right {
+.sidebar-trends {
     display         : flex;
     flex-direction  : column;
-    min-width       : 280px;
-    max-width       : 280px;
-    padding         : var(--padding-main);
+    min-width       : 20rem;
+    max-width       : 20rem;
+    padding-top     : var(--padding-top-main);
     background-color: var(--background-third);
     position        : sticky;
     top             : 150px;
