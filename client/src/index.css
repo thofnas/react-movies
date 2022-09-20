@@ -2,12 +2,13 @@
   --background-main     : #0F1115;
   --background-secondary: #19181F;
   --background-third    : #222128;
+  --border-color        : #333239;
   --text-main           : #eeeeee;
   --text-inactive       : #6F7072;
 
   --padding-sides-main  : 4rem;
   --padding-top-main    : 3rem;
-  --movies-border-radius: 1.2rem;
+  --movies-border-radius: 1rem;
 }
 
 body {

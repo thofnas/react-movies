@@ -16,7 +16,7 @@ export default function DiscoverSection({ title, queries }) {
         let queryString = isForApi ? '&' : '?'
         let index = 0
 
-        for (let key in queries) {
+        for (const key in queries) {
             index === 0
                 ? queryString += `${key}=${queries[key]}`
                 : queryString += `&${key}=${queries[key]}`

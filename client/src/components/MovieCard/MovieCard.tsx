@@ -9,11 +9,11 @@ import { usePalette } from 'react-palette'
 import './MovieCard.css'
 
 export default function MovieCard({ poster_path, title, vote_average, id }) {
-    let location = useLocation()
+    const location = useLocation()
     const { type } = useParams()
     const [searchParams] = useSearchParams()
     const IMAGE_URL = `https://image.tmdb.org/t/p/w500${poster_path}`
-    const { data } = usePalette(IMAGE_URL)
+    const { data, loading } = usePalette(IMAGE_URL)
 
     return (
         <Link
@@ -28,18 +28,21 @@ export default function MovieCard({ poster_path, title, vote_average, id }) {
             < div className='movie-card'>
                 <div className="movie-card-image"
                     style={{
-                        boxShadow: `0px 8px 32px -7px ${data?.darkVibrant}`
+                        boxShadow: `0px 8px 32px -7px ${data?.darkVibrant}`,
+                        backgroundColor: data?.muted
                     }}>
 
-                    <PreloadImage
-                        style={{
-                            backgroundColor: data?.muted,
-                        }}
-                        className='img'
-                        lazy
-                        src={IMAGE_URL}
-                        alt='' />
-
+                    <div className='img'>
+                        {!loading &&
+                            <PreloadImage
+                                style={{
+                                    backgroundColor: data?.muted,
+                                }}
+                                lazy
+                                src={IMAGE_URL}
+                                alt='' />
+                        }
+                    </div>
                 </div>
                 <div className="movie-card-title">
                     <span>{title}</span>

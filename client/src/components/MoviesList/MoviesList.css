@@ -3,32 +3,39 @@
     width                 : 100%;
     border-top-left-radius: var(--movies-border-radius);
     align-items           : center;
-    padding               : 1.2rem;
+    padding               : 0 2rem;
 }
 
-.movies-list button {
-    background-color: var(--background-main);
-    border-radius   : var(--movies-border-radius);
-    border          : 0;
-    color           : var(--text-primary);
-    font-size       : 1rem;
-    padding         : 0.5rem 1rem;
-    margin-left     : 0.5rem;
-    margin-right    : 0.5rem;
-    margin-bottom   : 0.5rem;
-    cursor          : pointer;
-}
 
 .movies-list-control {
     display        : flex;
     flex-direction : row;
-    justify-content: end;
+    justify-content: space-between;
     align-items    : center;
+    height         : 4rem;
 }
+
+.movies-list-control button {
+    background-color: var(--background-main);
+    border          : none;
+    background      : none;
+    color           : var(--text-inactive);
+    font-size       : 1rem;
+    cursor          : pointer;
+}
+
+.movies-list-control button:not(:first-child) {
+    border-left : 1px solid var(--border-color);
+    padding-left: 1rem;
+}
+
+.movies-list-control button:not(:last-child) {
+    padding-right: 1rem;
+}
+
 
 .movies-list-content {
     display              : grid;
-    padding: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
     gap                  : 1.2rem;
 }
@@ -42,6 +49,6 @@
 }
 
 .active-sort {
-    background-color: var(--background-third) !important;
-    color           : var(--text-primary) !important;
+    color          : var(--text-primary) !important;
+    text-decoration: underline;
 }

@@ -23,6 +23,7 @@
 .movie-card-image>.img {
     position           : relative;
     height             : 400px;
+    width              : 100%;
     background-size    : contain;
     background-position: top top;
     transform          : scale(1, 1);
@@ -30,14 +31,14 @@
 }
 
 .movie-card-title {
-    overflow: hidden;
-text-overflow: ellipsis;
-    width: 100%;
-    z-index: 0;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    width        : 100%;
+    z-index      : 0;
 }
 
 
 .movie-card-title span {
     white-space: nowrap;
-    z-index: -10;
+    z-index    : -10;
 }
