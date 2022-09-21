@@ -69,7 +69,9 @@ export default function Header() {
             <>
               <NavLink to="/profile/watchlist">Watchlist</NavLink>
               <NavLink to="/profile">
-                <img src="" alt="Profile" />
+                <div className="profile-image-container">
+                  <img src="/profile.png" alt="Profile" />
+                </div>
               </NavLink>
             </>
           ) : (
