@@ -52,10 +52,10 @@ header span {
 }
 
 .search-btn::before {
+  content: '';
   transform: translateX(-0.8rem);
   width: 0px;
   height: 1.5rem;
-  content: '';
   position: absolute;
   padding: 0 1rem 0 0rem;
   border-left: 1px solid var(--text-inactive);

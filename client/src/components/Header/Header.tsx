@@ -49,38 +49,36 @@ export default function Header() {
           </h2>
         </NavLink>
       </div>
-      <div className="header-nav">
-        <div className="header-search">
-          <input
-            className="search-input"
-            type="search"
-            ref={searchInput}
-            onChange={(e) => setSearchInputText(e.target.value)}
-            placeholder="Search any movies or tv shows"
-          />
-          <button className="search-btn" onClick={searchButtonHandler}>
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-        </div>
-        <div className="header-container">
-          <NavLink to="/movie">Movies</NavLink>
-          <NavLink to="/tv">TV Shows</NavLink>
-          {isSigned ? (
-            <>
-              <NavLink to="/profile/watchlist">Watchlist</NavLink>
-              <NavLink to="/profile">
-                <div className="profile-image-container">
-                  <img src="/profile.png" alt="Profile" />
-                </div>
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/">Sign In</NavLink>
-              <NavLink to="/">Sign Up</NavLink>
-            </>
-          )}
-        </div>
+      <div className="header-search">
+        <input
+          className="search-input"
+          type="search"
+          ref={searchInput}
+          onChange={(e) => setSearchInputText(e.target.value)}
+          placeholder="Search any movies or tv shows"
+        />
+        <button className="search-btn" onClick={searchButtonHandler}>
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
+      </div>
+      <div className="header-container">
+        <NavLink to="/movie">Movies</NavLink>
+        <NavLink to="/tv">TV Shows</NavLink>
+        {isSigned ? (
+          <>
+            <NavLink to="/profile/watchlist">Watchlist</NavLink>
+            <NavLink to="/profile">
+              <div className="profile-image-container">
+                <img src="/profile.png" alt="Profile" />
+              </div>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/">Sign In</NavLink>
+            <NavLink to="/">Sign Up</NavLink>
+          </>
+        )}
       </div>
     </header>
   )
