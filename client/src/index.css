@@ -1,14 +1,16 @@
 :root {
-  --background-main     : #0F1115;
-  --background-secondary: #19181F;
+  --background-main     : #0f1115;
+  --background-secondary: #19181f;
   --background-third    : #222128;
   --border-color        : #333239;
   --text-main           : #eeeeee;
-  --text-inactive       : #6F7072;
+  --text-inactive       : #6f7072;
 
   --padding-sides-main  : 4rem;
   --padding-top-main    : 3rem;
   --movies-border-radius: 1rem;
+
+  --sidebar-width: 180px;
 }
 
 body {
@@ -33,5 +35,5 @@ h6 {
 
 a {
   text-decoration: none;
-  color          : var(--text-main)
+  color          : var(--text-main);
 }
