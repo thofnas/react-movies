@@ -3,14 +3,16 @@
   --background-secondary: #19181f;
   --background-third    : #222128;
   --border-color        : #333239;
-  --text-main           : #eeeeee;
+  --text-main           : #dddddd;
   --text-inactive       : #6f7072;
 
   --padding-sides-main  : 4rem;
   --padding-top-main    : 3rem;
   --movies-border-radius: 1rem;
 
+  /* Sidebar */
   --sidebar-width: 180px;
+
 }
 
 body {

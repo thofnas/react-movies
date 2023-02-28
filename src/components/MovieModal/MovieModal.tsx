@@ -1,4 +1,3 @@
-import React from 'react'
 import { Dialog } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import { motion } from 'framer-motion'
@@ -7,20 +6,16 @@ import './MovieModal.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Movie from '../Movie/Movie'
 
-type LocationProps = {
-  state: {
-    background: Location
-    type: Location
-  }
-}
-
 export default function MovieModal() {
-  const location = useLocation() as unknown as LocationProps
+  let location = useLocation()
   const navigate = useNavigate()
+
+  console.log(location?.state?.type)
+
   return (
     <Dialog
-      className="modal"
-      aria-labelledby="label"
+      className='modal'
+      aria-labelledby='label'
       onDismiss={() => navigate(-1)}
     >
       <motion.div

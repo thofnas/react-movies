@@ -20,7 +20,9 @@ export default function Sidebar() {
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API}`
+        `https://api.themoviedb.org/3/genre/${type}/list?api_key=${
+          import.meta.env.VITE_API
+        }`
       )
       .then((res) => {
         setGenre(res?.data?.genres)
@@ -36,8 +38,8 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="sidebar">
-      <div className="genre-container">
+    <div className='sidebar'>
+      <div className='genre-container'>
         <h3>Genres</h3>
         <ul
           className={!showMore ? 'sidebar-show-less' : ''}
@@ -54,14 +56,14 @@ export default function Sidebar() {
         <ul>
           {showMore ? (
             <li
-              className="sidebar-list-button"
+              className='sidebar-list-button'
               onClick={() => setShowMore(false)}
             >
               Show less...
             </li>
           ) : (
             <li
-              className="sidebar-list-button"
+              className='sidebar-list-button'
               onClick={() => setShowMore(true)}
             >
               Show more...
@@ -69,7 +71,7 @@ export default function Sidebar() {
           )}
         </ul>
       </div>
-      <div className="language-container">
+      <div className='language-container'>
         <h3>Languages</h3>
         <ul>
           {languages.map((language) => {

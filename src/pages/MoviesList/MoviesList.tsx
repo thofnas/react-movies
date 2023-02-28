@@ -10,8 +10,8 @@ import scrollIntoView from 'scroll-into-view-if-needed'
 import { motion } from 'framer-motion'
 
 import './MoviesList.css'
-import MovieCard from '../MovieCard/MovieCard'
-import MovieCardSkeleton from '../MovieCardSkeleton/MovieCardSkeleton'
+import MovieCard from '../../components/MovieCard/MovieCard'
+import MovieCardSkeleton from '../../components/MovieCardSkeleton/MovieCardSkeleton'
 
 const MoviesList = () => {
   const location = useLocation()
@@ -37,7 +37,7 @@ const MoviesList = () => {
     )
 
     const url = `https://api.themoviedb.org/3/discover/${type}?api_key=${
-      process.env.REACT_APP_API
+      import.meta.env.VITE_API
     }&${location.search.substring(1)}&page=${page}`
     axios
       .get(url)
@@ -78,36 +78,36 @@ const MoviesList = () => {
   }
 
   return (
-    <div className="movies-list">
-      <div className="movies-list-control">
-        <div className="left-container">
+    <div className='movies-list'>
+      <div className='movies-list-control'>
+        <div className='left-container'>
           <span>{selectedGenre}</span>
         </div>
-        <div className="right-container">
+        <div className='right-container'>
           <button
             className={sorting === 'vote_average.desc' ? 'active-sort' : null}
             onClick={sortingHandler}
-            value="vote_average.desc"
+            value='vote_average.desc'
           >
             Top rated
           </button>
           <button
             className={sorting === 'popularity.desc' ? 'active-sort' : null}
             onClick={sortingHandler}
-            value="popularity.desc"
+            value='popularity.desc'
           >
             Popular
           </button>
           <button
             className={sorting === 'release_date.desc' ? 'active-sort' : null}
             onClick={sortingHandler}
-            value="release_date.desc"
+            value='release_date.desc'
           >
             By date
           </button>
         </div>
       </div>
-      <div className="movies-list-content">
+      <div className='movies-list-content'>
         {loading ? (
           <MovieCardSkeleton count={20} />
         ) : (
@@ -122,18 +122,18 @@ const MoviesList = () => {
           ))
         )}
       </div>
-      <div className="pages-control">
+      <div className='pages-control'>
         {page > 1 ? (
-          <button onClick={pageHandler} value="previous">
+          <button onClick={pageHandler} value='previous'>
             Previous
           </button>
         ) : (
-          <button disabled onClick={pageHandler} value="previous">
+          <button disabled onClick={pageHandler} value='previous'>
             Previous
           </button>
         )}
         <span>{page}</span>
-        <button onClick={pageHandler} value="next">
+        <button onClick={pageHandler} value='next'>
           Next
         </button>
       </div>

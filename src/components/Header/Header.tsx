@@ -23,7 +23,7 @@ export default function Header() {
 
   return (
     <header>
-      <div className="header-logo-container">
+      <div className='header-logo-container'>
         <NavLink
           to={`/${type ? type : 'movie'}`}
           style={{
@@ -32,7 +32,7 @@ export default function Header() {
         >
           <FontAwesomeIcon
             icon={faFilm}
-            size="3x"
+            size='3x'
             style={{
               position: 'absolute',
               display: 'flex',
@@ -49,37 +49,22 @@ export default function Header() {
           </h2>
         </NavLink>
       </div>
-      <div className="header-container">
-        <div className="header-search-container">
+      <div className='header-container'>
+        <div className='header-search-container'>
           <input
-            className="search-input"
-            type="search"
+            className='search-input'
+            type='search'
             ref={searchInput}
             onChange={(e) => setSearchInputText(e.target.value)}
-            placeholder="Search any movies or tv shows"
+            placeholder='Search any movies or tv shows'
           />
-          <button className="search-btn" onClick={searchButtonHandler}>
+          <button className='search-btn' onClick={searchButtonHandler}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
-        <div className="header-buttons-container">
-          <NavLink to="/movie">Movies</NavLink>
-          <NavLink to="/tv">TV Shows</NavLink>
-          {isSigned ? (
-            <>
-              <NavLink to="/profile/watchlist">Watchlist</NavLink>
-              <NavLink to="/profile">
-                <div className="profile-image-container">
-                  <img src="/profile.png" alt="Profile" />
-                </div>
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/">Sign In</NavLink>
-              <NavLink to="/">Sign Up</NavLink>
-            </>
-          )}
+        <div className='header-buttons-container'>
+          <NavLink to='/movie'>Movies</NavLink>
+          <NavLink to='/tv'>TV Shows</NavLink>
         </div>
       </div>
     </header>

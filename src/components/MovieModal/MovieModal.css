@@ -1,11 +1,8 @@
 .modal {
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
     position        : relative;
     background-color: transparent;
     z-index         : 999999;
     margin          : auto;
-    top             : 25%;
     padding         : 0;
+    min-width       : 1280px;
 }

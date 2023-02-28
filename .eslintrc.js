@@ -17,6 +17,8 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    'react/prop-types': 0
+    'react/prop-types': 0,
+    'react/react-in-jsx-scope': 0,
+    'prefer-const': 0
   }
 }

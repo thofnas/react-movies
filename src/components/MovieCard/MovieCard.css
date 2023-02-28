@@ -10,10 +10,6 @@
     height         : 100%;
 }
 
-.movie-card:hover .img {
-    transform: scale(1.05, 1.05);
-}
-
 .movie-card-image {
     overflow     : hidden;
     border-radius: 0.5rem;
@@ -21,13 +17,9 @@
 }
 
 .movie-card-image>.img {
-    position           : relative;
-    height             : 400px;
-    width              : 100%;
-    background-size    : contain;
-    background-position: top top;
-    transform          : scale(1, 1);
-    transition         : .3s ease-in-out;
+    position  : relative;
+    height    : 400px;
+    transition: .3s ease-in-out;
 }
 
 .movie-card-title {

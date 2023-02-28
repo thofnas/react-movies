@@ -2,31 +2,27 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 
-type LocationProps = {
-  state: {
-    background: Location
-  }
-}
-
 import './Movie.css'
 
 export default function Movie({ typeB }) {
-  const location = useLocation() as unknown as LocationProps
+  const location = useLocation()
   const navigate = useNavigate()
-  const { type, id } = useParams()
+  const { id } = useParams()
+
   const [movieData, setMovieData] = useState<any>()
   const [videosData, setVideosData] = useState<any>()
   const [loadingMain, setLoadingMain] = useState<boolean>(true)
   const [loadingVideos, setLoadingVideos] = useState<boolean>(true)
 
+  if (location.state?.backgroundLocation === undefined) {
+    navigate('', { replace: true })
+  }
+
   useEffect(() => {
-    if (location.state?.background === undefined) {
-      navigate('', { replace: true })
-    }
     axios
       .get(
-        `https://api.themoviedb.org/3/${type ? type : typeB}/${id}?api_key=${
-          process.env.REACT_APP_API
+        `https://api.themoviedb.org/3/${typeB}/${id}?api_key=${
+          import.meta.env.VITE_API
         }`
       )
       .then((res) => {
@@ -35,9 +31,9 @@ export default function Movie({ typeB }) {
       })
     axios
       .get(
-        `https://api.themoviedb.org/3/${
-          type ? type : typeB
-        }/${id}/videos?api_key=${process.env.REACT_APP_API}`
+        `https://api.themoviedb.org/3/${typeB}/${id}/videos?api_key=${
+          import.meta.env.VITE_API
+        }`
       )
       .then((res) => {
         setVideosData(res?.data)
@@ -46,7 +42,10 @@ export default function Movie({ typeB }) {
   }, [])
 
   const colorHandler = () => {
-    if (movieData?.vote_average.toFixed(1) === 0) {
+    if (
+      movieData?.vote_average.toFixed(1) === 0 ||
+      movieData?.vote_average.toFixed(1) === undefined
+    ) {
       return '#6F7072'
     }
     if (movieData?.vote_average.toFixed(1) <= 6.5) {
@@ -61,98 +60,95 @@ export default function Movie({ typeB }) {
   }
 
   return (
-    <div className="movie-container">
-      <div className="movie-thumb-container">
+    <div className='movie-container'>
+      <div className='movie-backdrop'>
         {!loadingMain && (
           <div
-            className="movie-thumb"
+            className='movie-backdrop-img'
             style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieData?.poster_path})`
+              backgroundImage: `url(https://image.tmdb.org/t/p/original${movieData?.backdrop_path})`
             }}
           ></div>
         )}
       </div>
-      <div className="movie-info-container">
-        <div className="movie-title">
-          <span className="title">{movieData?.title || movieData?.name}</span>
+      <div className='movie-info-container'>
+        <div className='movie-info-section'>
+          {!loadingMain && (
+            <img
+              className='movie-thumb-img'
+              src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`}
+              style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieData?.poster_path})`
+              }}
+            ></img>
+          )}
+        </div>
+        <div className='movie-info-section'>
+          <span className='title'>{movieData?.title || movieData?.name}</span>
 
-          <div className="badges-container">
-            {movieData?.adult && (
-              <span className="badge" style={{ backgroundColor: '#6F7072' }}>
-                18+
-              </span>
-            )}
-            <span className="badge" style={{ backgroundColor: colorHandler() }}>
-              {movieData?.vote_average.toFixed(1)}
+          {movieData?.overview && (
+            <span className='info-value'>{movieData?.overview}</span>
+          )}
+        </div>
+        <div className='movie-info-section'></div>
+
+        {movieData?.adult && (
+          <div className='badge' style={{ backgroundColor: '#6F7072' }}>
+            <span>18+</span>
+          </div>
+        )}
+        <div className='badge' style={{ backgroundColor: colorHandler() }}>
+          <span>{movieData?.vote_average.toFixed(1)}</span>
+        </div>
+
+        {movieData?.release_date && (
+          <div className='movie-info-item'>
+            <span className='info-label'>Release Date</span>
+            <br />
+            <span className='info-value'>
+              {movieData?.release_date || movieData?.first_air_date}
             </span>
           </div>
-        </div>
-        <div className="movie-info">
-          <div className="movie-info-row">
-            <div className="movie-info-column">
-              {movieData?.release_date && (
-                <div className="movie-info-item">
-                  <span className="info-label">Release Date</span>
-                  <br />
-                  <span className="info-value">
-                    {movieData?.release_date || movieData?.first_air_date}
-                  </span>
-                </div>
-              )}
+        )}
 
-              {movieData?.genre && (
-                <div className="movie-info-item">
-                  <span className="info-label">Genre</span>
-                  <br />
-                  <span className="info-value">
-                    {movieData?.genres?.map((genre) => genre.name).join(', ')}
-                  </span>
-                </div>
-              )}
-
-              {movieData?.runtime && (
-                <div className="movie-info-item">
-                  <span className="info-label">Duration</span>
-                  <br />
-                  <span className="info-value">
-                    {movieData?.runtime} minutes
-                  </span>
-                </div>
-              )}
-            </div>
-            <div className="movie-info-column">
-              {movieData?.overview && (
-                <div className="movie-info-item">
-                  <span className="info-label">Overview</span>
-                  <br />
-                  <span className="info-value">{movieData?.overview}</span>
-                </div>
-              )}
-            </div>
+        {movieData?.genre && (
+          <div className='movie-info-item'>
+            <span className='info-label'>Genre</span>
+            <br />
+            <span className='info-value'>
+              {movieData?.genres?.map((genre) => genre.name).join(', ')}
+            </span>
           </div>
-          <div className="movie-info-row">
-            <div className="movie-info-column">
-              {!loadingVideos && (
-                <div className="movie-info-item">
-                  <span className="info-label">Media</span>
-                  <br />
+        )}
 
-                  {videosData?.results.forEach((video) => {
-                    <iframe
-                      width="420"
-                      height="315"
-                      src={`https://www.youtube.com/embed/${video?.key}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title="Embedded youtube"
-                    ></iframe>
-                  })}
-                </div>
-              )}
-            </div>
+        {movieData?.runtime && (
+          <div className='movie-info-item'>
+            <span className='info-label'>Duration</span>
+            <br />
+            <span className='info-value'>{movieData?.runtime} minutes</span>
           </div>
-        </div>
+        )}
+
+        {!loadingVideos && (
+          <div className='movie-info-item'>
+            <span className='info-label'>Media</span>
+            <br />
+
+            {videosData?.results.forEach((video) => {
+              return (
+                <iframe
+                  width='420'
+                  height='315'
+                  src={`https://www.youtube.com/embed/${video?.key}`}
+                  frameBorder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                  title='Embedded youtube'
+                ></iframe>
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )
