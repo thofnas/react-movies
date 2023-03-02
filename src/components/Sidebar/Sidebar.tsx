@@ -1,36 +1,20 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import {
-  useNavigate,
-  useParams,
-  useLocation,
-  useSearchParams
-} from 'react-router-dom'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useState } from 'react'
+import Skeleton from 'react-loading-skeleton'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { getGenres } from '../../api/genres'
 import './Sidebar.css'
 
 export default function Sidebar() {
   const [showMore, setShowMore] = useState(false)
-  const [genres, setGenre] = useState([])
-  const [searchParams, setSearchParams] = useSearchParams()
-  const location = useLocation()
-  const [selectedGenre, setSelectedGenre] = useState('')
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const { type } = useParams()
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/genre/${type}/list?api_key=${
-          import.meta.env.VITE_API
-        }`
-      )
-      .then((res) => {
-        setGenre(res?.data?.genres)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [type])
+  const queryData = useQuery({
+    queryKey: [type],
+    queryFn: () => getGenres(type)
+  })
 
   const genreClickHandler = (e) => {
     searchParams.set('with_genres', e.target.id)
@@ -45,7 +29,8 @@ export default function Sidebar() {
           className={!showMore ? 'sidebar-show-less' : ''}
           style={{ marginBottom: '0rem' }}
         >
-          {genres.map((genre) => {
+          {queryData?.isLoading && <Skeleton count={2} />}
+          {queryData?.data?.genres.map((genre) => {
             return (
               <li onClick={genreClickHandler} id={genre?.id} key={genre?.id}>
                 {genre?.name}

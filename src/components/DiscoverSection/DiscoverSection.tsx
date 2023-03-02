@@ -1,54 +1,42 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
+import { getMovies } from '../../api/movies'
+import { getTVs } from '../../api/tvs'
 
 import MovieCard from '../MovieCard/MovieCard'
 import MovieCardSkeleton from '../MovieCardSkeleton/MovieCardSkeleton'
 import './DiscoverSection.css'
 
-export default function DiscoverSection({ title, queries }) {
+const DiscoverSection = ({ title, queryParams }) => {
   const { type } = useParams()
-  const [moviesSection, setMoviesSection] = useState([])
-  const [loading, setLoading] = useState(true)
-  const url = `https://api.themoviedb.org/3/discover/${type}?api_key=${
-    import.meta.env.VITE_API
-  }`
 
-  const queryString = (queries, isForApi) => {
-    let queryString = isForApi ? '&' : '?'
+  const queryData = useQuery({
+    queryKey: [type, queryParams],
+    queryFn: () => getMovies(type, queryParams)
+  })
+
+  const paramsToString = (queryParams) => {
+    let queryString = ''
     let index = 0
 
-    for (const key in queries) {
+    for (const key in queryParams) {
       index === 0
-        ? (queryString += `${key}=${queries[key]}`)
-        : (queryString += `&${key}=${queries[key]}`)
+        ? (queryString += `?${key}=${queryParams[key]}`)
+        : (queryString += `&${key}=${queryParams[key]}`)
       index++
     }
     return queryString
   }
 
-  useEffect(() => {
-    setLoading(true)
-    axios
-      .get(url + queryString(queries, true))
-      .then((res) => {
-        setMoviesSection(res?.data?.results)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [type])
-
   return (
     <div className='discover-section'>
       <div className='discover-section-title'>
         <h2>{title}</h2>
-        <Link to={`/${type}/list${queryString(queries, false)}`}>See more</Link>
+        <Link to={`/${type}/list${paramsToString(queryParams)}`}>See more</Link>
       </div>
       <div className='discover-section-list'>
-        {loading && <MovieCardSkeleton count={4} />}
-        {moviesSection?.slice(0, 4).map((movie) => (
+        {queryData?.isLoading && <MovieCardSkeleton count={4} />}
+        {queryData?.data?.results?.slice(0, 4).map((movie) => (
           <MovieCard
             key={movie?.id}
             id={movie?.id}
@@ -61,3 +49,5 @@ export default function DiscoverSection({ title, queries }) {
     </div>
   )
 }
+
+export default DiscoverSection

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import DiscoverSection from '../../components/DiscoverSection/DiscoverSection'
 import './MoviesDiscover.css'
 
@@ -7,13 +5,13 @@ export default function MoviesDiscover() {
   const SECTIONS = [
     {
       title: 'Popular Movies',
-      queries: {
+      queryParams: {
         sort_by: 'popularity.desc'
       }
     },
     {
       title: 'Top Rated Movies',
-      queries: {
+      queryParams: {
         sort_by: 'vote_average.desc',
         'vote_count.gte': '500'
       }
@@ -26,7 +24,7 @@ export default function MoviesDiscover() {
         <DiscoverSection
           key={section?.title}
           title={section?.title}
-          queries={section?.queries}
+          queryParams={section?.queryParams}
         />
       ))}
     </div>

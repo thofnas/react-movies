@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   Routes,
   Route,
@@ -21,6 +21,7 @@ import SidebarTrends from './components/SidebarTrends/SidebarTrends'
 
 export default function App() {
   const location = useLocation()
+  const navigate = useNavigate()
   const state = location.state as { backgroundLocation?: Location }
 
   return (

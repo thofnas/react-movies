@@ -1,60 +1,46 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { getMovie } from '../../api/movies'
 
 import './Movie.css'
 
 export default function Movie({ typeB }) {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const { type } = useParams()
   const { id } = useParams()
 
-  const [movieData, setMovieData] = useState<any>()
-  const [videosData, setVideosData] = useState<any>()
-  const [loadingMain, setLoadingMain] = useState<boolean>(true)
-  const [loadingVideos, setLoadingVideos] = useState<boolean>(true)
+  const queryData = useQuery({
+    queryKey: [type ? type : typeB, id],
+    queryFn: () => getMovie(type ? type : typeB, id)
+  })
 
-  if (location.state?.backgroundLocation === undefined) {
-    navigate('', { replace: true })
-  }
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${typeB}/${id}?api_key=${
-          import.meta.env.VITE_API
-        }`
-      )
-      .then((res) => {
-        setMovieData(res?.data)
-        setLoadingMain(false)
-      })
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${typeB}/${id}/videos?api_key=${
-          import.meta.env.VITE_API
-        }`
-      )
-      .then((res) => {
-        setVideosData(res?.data)
-        setLoadingVideos(false)
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${
+  //         import.meta.env.VITE_API
+  //       }`
+  //     )
+  //     .then((res) => {
+  //       setVideosData(res?.data)
+  //       setLoadingVideos(false)
+  //     })
+  // }, [])
 
   const colorHandler = () => {
     if (
-      movieData?.vote_average.toFixed(1) === 0 ||
-      movieData?.vote_average.toFixed(1) === undefined
+      queryData?.data?.vote_average.toFixed(1) === 0 ||
+      queryData?.data?.vote_average.toFixed(1) === undefined
     ) {
       return '#6F7072'
     }
-    if (movieData?.vote_average.toFixed(1) <= 6.5) {
+    if (queryData?.data?.vote_average.toFixed(1) <= 6.5) {
       return '#F44336'
     }
-    if (movieData?.vote_average.toFixed(1) <= 7.5) {
+    if (queryData?.data?.vote_average.toFixed(1) <= 7.5) {
       return '#FF9800'
     }
-    if (movieData?.vote_average.toFixed(1) <= 10) {
+    if (queryData?.data?.vote_average.toFixed(1) <= 10) {
       return '#4CAF50'
     }
   }
@@ -62,93 +48,83 @@ export default function Movie({ typeB }) {
   return (
     <div className='movie-container'>
       <div className='movie-backdrop'>
-        {!loadingMain && (
+        {!queryData?.isLoading && (
           <div
             className='movie-backdrop-img'
             style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original${movieData?.backdrop_path})`
+              backgroundImage: `url(https://image.tmdb.org/t/p/original${queryData?.data?.backdrop_path})`
             }}
           ></div>
         )}
       </div>
       <div className='movie-info-container'>
         <div className='movie-info-section'>
-          {!loadingMain && (
+          {!queryData?.isLoading && (
             <img
               className='movie-thumb-img'
-              src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${queryData?.data?.poster_path}`}
               style={{
-                backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieData?.poster_path})`
+                backgroundImage: `url(https://image.tmdb.org/t/p/w500${queryData?.data?.poster_path})`
               }}
             ></img>
           )}
         </div>
         <div className='movie-info-section'>
-          <span className='title'>{movieData?.title || movieData?.name}</span>
+          <span className='title'>
+            {queryData?.data?.title || queryData?.data?.name}
+          </span>
 
-          {movieData?.overview && (
-            <span className='info-value'>{movieData?.overview}</span>
+          {queryData?.data?.overview && (
+            <span className='info-value'>{queryData?.data?.overview}</span>
           )}
         </div>
         <div className='movie-info-section'></div>
 
-        {movieData?.adult && (
+        {queryData?.data?.adult && (
           <div className='badge' style={{ backgroundColor: '#6F7072' }}>
             <span>18+</span>
           </div>
         )}
         <div className='badge' style={{ backgroundColor: colorHandler() }}>
-          <span>{movieData?.vote_average.toFixed(1)}</span>
+          <span>{queryData?.data?.vote_average.toFixed(1)}</span>
         </div>
 
-        {movieData?.release_date && (
+        {queryData?.data?.release_date && (
           <div className='movie-info-item'>
             <span className='info-label'>Release Date</span>
             <br />
             <span className='info-value'>
-              {movieData?.release_date || movieData?.first_air_date}
+              {queryData?.data?.release_date || queryData?.data?.first_air_date}
             </span>
           </div>
         )}
 
-        {movieData?.genre && (
+        {queryData?.data?.genre && (
           <div className='movie-info-item'>
             <span className='info-label'>Genre</span>
             <br />
             <span className='info-value'>
-              {movieData?.genres?.map((genre) => genre.name).join(', ')}
+              {queryData?.data?.genres?.map((genre) => genre.name).join(', ')}
             </span>
           </div>
         )}
 
-        {movieData?.runtime && (
+        {queryData?.data?.runtime && (
           <div className='movie-info-item'>
             <span className='info-label'>Duration</span>
             <br />
-            <span className='info-value'>{movieData?.runtime} minutes</span>
+            <span className='info-value'>
+              {queryData?.data?.runtime} minutes
+            </span>
           </div>
         )}
 
-        {!loadingVideos && (
+        {/* {!loadingVideos && (
           <div className='movie-info-item'>
             <span className='info-label'>Media</span>
             <br />
-
-            {videosData?.results.forEach((video) => {
-              return (
-                <iframe
-                  width='420'
-                  height='315'
-                  src={`https://www.youtube.com/embed/${video?.key}`}
-                  frameBorder='0'
-                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                  allowFullScreen
-                  title='Embedded youtube'
-                ></iframe>
-              )
-            })}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )

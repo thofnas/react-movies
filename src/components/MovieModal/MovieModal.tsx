@@ -10,8 +10,6 @@ export default function MovieModal() {
   let location = useLocation()
   const navigate = useNavigate()
 
-  console.log(location?.state?.type)
-
   return (
     <Dialog
       className='modal'

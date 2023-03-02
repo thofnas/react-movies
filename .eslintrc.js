@@ -19,6 +19,7 @@ module.exports = {
   rules: {
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 0,
-    'prefer-const': 0
+    'prefer-const': 0,
+    '@typescript-eslint/no-extra-semi': 0
   }
 }
