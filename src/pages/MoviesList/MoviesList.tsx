@@ -59,7 +59,7 @@ const MoviesList = () => {
     return () => {
       document.removeEventListener('scroll', onScroll)
     }
-  })
+  }, [queryData])
 
   useEffect(() => {
     const onScroll = async (event) => {
