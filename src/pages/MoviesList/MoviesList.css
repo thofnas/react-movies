@@ -1,54 +1,71 @@
 .movies-list {
-    background-color      : var(--background-secondary);
-    width                 : 100%;
-    border-top-left-radius: var(--movies-border-radius);
-    align-items           : center;
-    padding               : 0 2rem;
+  background-color: var(--background-secondary);
+  width: 100%;
+  border-top-left-radius: var(--movies-border-radius);
+  align-items: center;
+  padding: 0 2rem;
 }
 
-
 .movies-list-control {
-    display        : flex;
-    flex-direction : row;
-    justify-content: space-between;
-    align-items    : center;
-    height         : 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
 }
 
 .movies-list-control button {
-    background-color: var(--background-main);
-    border          : none;
-    background      : none;
-    color           : var(--text-inactive);
-    font-size       : 1rem;
-    cursor          : pointer;
+  background-color: var(--background-main);
+  border: none;
+  background: none;
+  color: var(--text-inactive);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .movies-list-control button:not(:first-child) {
-    border-left : 1px solid var(--border-color);
-    padding-left: 1rem;
+  border-left: 1px solid var(--border-color);
+  padding-left: 1rem;
 }
 
 .movies-list-control button:not(:last-child) {
-    padding-right: 1rem;
+  padding-right: 1rem;
 }
 
-
 .movies-list-content {
-    display              : grid;
-    grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
-    gap                  : 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  gap: 1.2rem;
 }
 
 .pages-control {
-    display        : flex;
-    flex-direction : row;
-    justify-content: center;
-    align-items    : center;
-    margin-top     : 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
 }
 
 .active-sort {
-    color          : var(--text-primary) !important;
-    text-decoration: underline;
+  color: var(--text-primary) !important;
+  text-decoration: underline;
+}
+
+.scroll-to-top-container {
+  position: fixed;
+  bottom: 0;
+  transform: translate(-5rem, 0);
+  padding: 2rem;
+  cursor: pointer;
+  color: #888;
+  transition-duration: 50ms;
+  border-radius: 20rem;
+}
+
+.scroll-to-top-container.active {
+  transform: translate(0, 0);
+}
+
+.scroll-to-top-container:hover {
+  color: #ddd;
 }

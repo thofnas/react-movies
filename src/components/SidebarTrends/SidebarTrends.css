@@ -1,11 +1,11 @@
 .sidebar-trends {
-    display         : flex;
-    flex-direction  : column;
-    min-width       : 20rem;
-    max-width       : 20rem;
-    padding-top     : var(--padding-top-main);
-    background-color: var(--background-third);
-    position        : sticky;
-    top             : 150px;
-    right           : 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 20rem;
+  max-width: 20rem;
+  padding-top: var(--padding-top-main);
+  background-color: var(--background-third);
+  position: sticky;
+  top: 150px;
+  right: 0;
 }

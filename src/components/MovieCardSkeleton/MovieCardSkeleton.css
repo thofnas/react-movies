@@ -1,7 +1,7 @@
 .movie-card-skeleton {
-    display        : flex;
-    flex-direction : column;
-    justify-content: space-between;
-    cursor         : pointer;
-    height         : 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  height: 100%;
 }

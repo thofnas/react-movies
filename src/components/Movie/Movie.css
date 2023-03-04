@@ -1,37 +1,43 @@
 .movie-container {
-    width           : 1280px;
-    overflow        : hidden;
-    background-color: var(--background-third);
+  width: 1280px;
+  overflow: hidden;
+  background-color: var(--background-third);
 }
 
 .movie-backdrop-img {
-    position         : relative;
-    top              : -2rem;
-    width            : 1280px;
-    max-height       : 512px;
-    background-repeat: no-repeat;
-    background-size  : cover;
-    aspect-ratio     : 16/9;
+  position: relative;
+  top: -2rem;
+  width: 1280px;
+  max-height: 512px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  aspect-ratio: 16/9;
 }
 
 .movie-thumb-img {
-    width : 256px;
-    height: auto;
+  width: 256px;
+  height: auto;
 }
 
 .movie-backdrop-img::after {
-    content   : '';
-    position  : absolute;
-    width     : 1280px;
-    height    : 100%;
-    background: rgb(34, 33, 40);
-    background: linear-gradient(0deg, rgba(34, 33, 40, 1) 0%, rgba(36, 35, 42, 0.9261905445772058) 13%, rgba(41, 40, 47, 0.7777311608237045) 29%, rgba(255, 255, 255, 0) 68%);
+  content: '';
+  position: absolute;
+  width: 1280px;
+  height: 100%;
+  background: rgb(34, 33, 40);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 33, 40, 1) 0%,
+    rgba(36, 35, 42, 0.9261905445772058) 13%,
+    rgba(41, 40, 47, 0.7777311608237045) 29%,
+    rgba(255, 255, 255, 0) 68%
+  );
 }
 
 .movie-info-container {
-    display              : grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    position             : relative;
-    top                  : -10rem;
-    padding              : 0 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  position: relative;
+  top: -10rem;
+  padding: 0 3rem;
 }

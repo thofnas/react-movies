@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react'
-import { NavLink, useParams, useNavigate } from 'react-router-dom'
+import React, { useRef } from 'react'
+import { NavLink, useParams } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
@@ -10,10 +10,8 @@ import './Header.css'
 export default function Header() {
   const [searchInputText, setSearchInputText] = React.useState('')
   const { type } = useParams()
-
   const searchInput = useRef<HTMLInputElement>(null)
 
-  const isSigned = true
   const searchButtonHandler = () => {
     searchInput.current.focus()
   }

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
@@ -15,6 +15,10 @@ export default function Sidebar() {
     queryKey: [type],
     queryFn: () => getGenres(type)
   })
+
+  languages = languages.sort((prev, next) =>
+    prev.english_name.localeCompare(next.english_name)
+  )
 
   const genreClickHandler = (e) => {
     searchParams.set('with_genres', e.target.id)
@@ -60,7 +64,7 @@ export default function Sidebar() {
         <h3>Languages</h3>
         <ul>
           {languages.map((language) => {
-            return <li key={language.id}>{language.name}</li>
+            return <li key={language.english_name}>{language.name}</li>
           })}
         </ul>
       </div>
@@ -68,25 +72,47 @@ export default function Sidebar() {
   )
 }
 
-const languages = [
+let languages = [
   {
-    id: 1,
+    iso_639_1: 'en',
+    iso_3166_1: 'US',
+    english_name: 'English',
     name: 'English'
   },
   {
-    id: 2,
-    name: 'Spanish'
+    iso_639_1: 'es',
+    iso_3166_1: 'ES',
+    english_name: 'Spanish',
+    name: 'Español'
   },
   {
-    id: 3,
-    name: 'French'
+    iso_639_1: 'fr',
+    iso_3166_1: 'FR',
+    english_name: 'French',
+    name: 'Français'
   },
   {
-    id: 4,
-    name: 'German'
+    iso_639_1: 'de',
+    iso_3166_1: 'DE',
+    english_name: 'German',
+    name: 'Deutsch'
   },
   {
-    id: 5,
-    name: 'Ukrainian'
+    iso_639_1: 'uk',
+    iso_3166_1: 'UA',
+    english_name: 'Ukrainian',
+    name: 'Український'
+  },
+  {
+    iso_639_1: 'it',
+    iso_3166_1: 'IT',
+    english_name: 'Italian',
+    name: 'Italiano'
+  },
+  {
+    iso_639_1: 'ja',
+    iso_3166_1: 'JP',
+    english_name: 'Japanese',
+    name: '日本語'
   }
 ]
