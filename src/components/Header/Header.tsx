@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,6 +11,7 @@ import './Header.css'
 export default function Header() {
   const { t } = useTranslation()
   const [searchInputText, setSearchInputText] = React.useState('')
+  const [searchParams] = useSearchParams()
   const { type } = useParams()
   const searchInput = useRef<HTMLInputElement>(null)
 

@@ -6,9 +6,9 @@ import {
   useLocation,
   useNavigate,
   Navigate,
-  useParams
+  useParams,
+  useSearchParams
 } from 'react-router-dom'
-import { SkeletonTheme } from 'react-loading-skeleton'
 
 import Header from './components/Header/Header'
 import MoviesList from './pages/MoviesList/MoviesList'
@@ -21,11 +21,11 @@ import SidebarTrends from './components/SidebarTrends/SidebarTrends'
 
 export default function App() {
   const location = useLocation()
-  const navigate = useNavigate()
+
   const state = location.state as { backgroundLocation?: Location }
 
   return (
-    <SkeletonTheme baseColor='#222128' highlightColor='#3A393E'>
+    <>
       <Routes location={state?.backgroundLocation || location}>
         <Route path=':type' element={<Layout />}>
           <Route index element={<MoviesDiscover />} />
@@ -42,7 +42,7 @@ export default function App() {
           <Route path='tv/:id' element={<MovieModal />} />
         </Routes>
       )}
-    </SkeletonTheme>
+    </>
   )
 }
 

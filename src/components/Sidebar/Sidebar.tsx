@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Skeleton from 'react-loading-skeleton'
 import {
@@ -9,16 +9,9 @@ import {
   useSearchParams
 } from 'react-router-dom'
 import { getGenres } from '../../api/genres'
+import paramsToObject from '../../helpers/paramsToObject'
 import './Sidebar.css'
 
-function paramsToObject(entries) {
-  const result = {}
-  for (const [key, value] of entries) {
-    // each 'entry' is a [key, value] tupple
-    result[key] = value
-  }
-  return result
-}
 export default function Sidebar() {
   const { t, i18n } = useTranslation()
   const [showMore, setShowMore] = useState(false)
@@ -48,6 +41,10 @@ export default function Sidebar() {
     searchParams.set('language', `${t('iso_639_1')}-${t('iso_3166_1')}`)
     navigate(`${location.pathname}?${searchParams}`)
   }
+
+  useEffect(() => {
+    queryData.refetch()
+  }, [queryData])
 
   return (
     <div className='sidebar'>
