@@ -6,8 +6,7 @@ import {
   useLocation,
   useNavigate,
   Navigate,
-  useParams,
-  useSearchParams
+  useParams
 } from 'react-router-dom'
 
 import Header from './components/Header/Header'
@@ -30,6 +29,7 @@ export default function App() {
         <Route path=':type' element={<Layout />}>
           <Route index element={<MoviesDiscover />} />
           <Route path='list' element={<MoviesList />} />
+          <Route path='list/search' element={<MoviesList />} />
           <Route path=':id' element={<Movie typeB={undefined} />} />
           <Route path='*' element={<Error />} />
         </Route>

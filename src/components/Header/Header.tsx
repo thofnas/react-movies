@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { NavLink, useParams, useSearchParams } from 'react-router-dom'
+import { useState, useRef, useEffect } from 'react'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,17 +7,23 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
+import useDebounce from '../../hooks/useDebounce'
 
 export default function Header() {
   const { t } = useTranslation()
-  const [searchInputText, setSearchInputText] = React.useState('')
-  const [searchParams] = useSearchParams()
+  const [searchInputText, setSearchInputText] = useState<string>('')
+  const debouncedInputText = useDebounce(searchInputText)
+  const navigate = useNavigate()
   const { type } = useParams()
   const searchInput = useRef<HTMLInputElement>(null)
 
   const searchButtonHandler = () => {
     searchInput.current.focus()
   }
+
+  useEffect(() => {
+    navigate(`/${type}/list/search?query=${searchInputText}`)
+  }, [debouncedInputText])
 
   let color = type === 'movie' ? '#0066ee' : '#ee1100'
   if (type !== 'movie' && type !== 'tv') color = '#444444'
@@ -56,6 +62,7 @@ export default function Header() {
             className='search-input'
             type='search'
             ref={searchInput}
+            value={searchInputText}
             onChange={(e) => setSearchInputText(e.target.value)}
             placeholder={t('Search any Movies or TV Shows')}
           />

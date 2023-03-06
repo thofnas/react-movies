@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import {
+  useNavigate,
+  useParams,
+  useSearchParams,
+  useLocation
+} from 'react-router-dom'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUp } from '@fortawesome/free-regular-svg-icons'
+import { useTranslation } from 'react-i18next'
 
 import './MoviesList.css'
 import MovieCard from '../../components/MovieCard/MovieCard'
 import MovieCardSkeleton from '../../components/MovieCardSkeleton/MovieCardSkeleton'
-import { getMovies } from '../../api/movies'
+import { getMovies, getSearchedMovies } from '../../api/movies'
 import { getGenres } from '../../api/genres'
-import { useTranslation } from 'react-i18next'
 
 function paramsToObject(entries) {
   const result = {}
@@ -25,15 +30,24 @@ const MoviesList = () => {
   const [isScrollButtonActive, setScrollButtonActive] = useState<boolean>()
   const [searchParams, setSearchParams] = useSearchParams()
   const { type } = useParams()
+  const location = useLocation()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const appElement = document.getElementsByClassName('App')[0]
 
   const params = paramsToObject(searchParams)
+  console.log(params)
 
   const queryData = useInfiniteQuery({
     queryKey: [type, params],
-    queryFn: ({ pageParam = 1 }) => getMovies(type, params, pageParam),
+    queryFn: ({ pageParam = 1 }) => {
+      if (
+        location.pathname.substring(1).split('/').includes('search') &&
+        Boolean(searchParams.get('query'))
+      )
+        return getSearchedMovies(type, params, pageParam)
+      return getMovies(type, params, pageParam)
+    },
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
       return nextPage <= lastPage.total_pages ? nextPage : undefined
