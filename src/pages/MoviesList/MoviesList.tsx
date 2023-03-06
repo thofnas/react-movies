@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,6 +10,7 @@ import MovieCard from '../../components/MovieCard/MovieCard'
 import MovieCardSkeleton from '../../components/MovieCardSkeleton/MovieCardSkeleton'
 import { getMovies } from '../../api/movies'
 import { getGenres } from '../../api/genres'
+import { useTranslation } from 'react-i18next'
 
 function paramsToObject(entries) {
   const result = {}
@@ -24,9 +25,11 @@ const MoviesList = () => {
   const [isScrollButtonActive, setScrollButtonActive] = useState<boolean>()
   const [searchParams, setSearchParams] = useSearchParams()
   const { type } = useParams()
+  const { t } = useTranslation()
+  const navigate = useNavigate()
   const appElement = document.getElementsByClassName('App')[0]
 
-  let params = paramsToObject(searchParams)
+  const params = paramsToObject(searchParams)
 
   const queryData = useInfiniteQuery({
     queryKey: [type, params],
@@ -39,8 +42,8 @@ const MoviesList = () => {
   })
 
   const queryDataGenres = useQuery({
-    queryKey: [type],
-    queryFn: () => getGenres(type)
+    queryKey: ['genres', type],
+    queryFn: () => getGenres(type, params)
   })
 
   useEffect(() => {
@@ -98,15 +101,14 @@ const MoviesList = () => {
                   ? 'active-sort'
                   : null
               }
-              onClick={() =>
-                setSearchParams({
-                  sort_by: 'vote_average.desc',
-                  'vote_count.gte': '500'
-                })
-              }
+              onClick={() => {
+                searchParams.set('sort_by', 'vote_average.desc')
+                searchParams.set('vote_count.gte', '500')
+                navigate(`/${type}/list?${searchParams}`)
+              }}
               value='vote_average.desc'
             >
-              Top rated
+              {t('Top Rated')}
             </button>
             <button
               className={
@@ -114,14 +116,14 @@ const MoviesList = () => {
                   ? 'active-sort'
                   : null
               }
-              onClick={() =>
-                setSearchParams({
-                  sort_by: 'popularity.desc'
-                })
-              }
+              onClick={() => {
+                searchParams.set('sort_by', 'popularity.desc')
+                searchParams.delete('vote_count.gte')
+                navigate(`/${type}/list?${searchParams}`)
+              }}
               value='popularity.desc'
             >
-              Popular
+              {t('Popular')}
             </button>
             <button
               className={
@@ -129,14 +131,14 @@ const MoviesList = () => {
                   ? 'active-sort'
                   : null
               }
-              onClick={() =>
-                setSearchParams({
-                  sort_by: 'release_date.desc'
-                })
-              }
+              onClick={() => {
+                searchParams.set('sort_by', 'release_date.desc')
+                searchParams.set('vote_count.gte', '1')
+                navigate(`/${type}/list?${searchParams}`)
+              }}
               value='release_date.desc'
             >
-              By date
+              {t('By Date')}
             </button>
           </div>
         </div>

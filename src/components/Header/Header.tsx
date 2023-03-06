@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +9,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import './Header.css'
 
 export default function Header() {
+  const { t } = useTranslation()
   const [searchInputText, setSearchInputText] = React.useState('')
   const { type } = useParams()
   const searchInput = useRef<HTMLInputElement>(null)
@@ -54,15 +56,15 @@ export default function Header() {
             type='search'
             ref={searchInput}
             onChange={(e) => setSearchInputText(e.target.value)}
-            placeholder='Search any movies or tv shows'
+            placeholder={t('Search any Movies or TV Shows')}
           />
           <button className='search-btn' onClick={searchButtonHandler}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
         <div className='header-buttons-container'>
-          <NavLink to='/movie'>Movies</NavLink>
-          <NavLink to='/tv'>TV Shows</NavLink>
+          <NavLink to='/movie'>{t('Movies')}</NavLink>
+          <NavLink to='/tv'>{t('TV Shows')}</NavLink>
         </div>
       </div>
     </header>
