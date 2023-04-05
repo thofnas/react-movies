@@ -27,10 +27,6 @@ export default function Sidebar() {
     queryFn: () => getGenres(type, params)
   })
 
-  languages = languages.sort((prev, next) =>
-    prev.english_name.localeCompare(next.english_name)
-  )
-
   const genreClickHandler = (e) => {
     searchParams.set('with_genres', e.target.id)
     navigate(`/${type}/list?${searchParams}`)
@@ -112,19 +108,14 @@ let languages = [
     name: 'Español'
   },
   {
-    iso_639_1: 'fr',
-    english_name: 'French',
-    name: 'Français'
-  },
-  {
     iso_639_1: 'ge',
     english_name: 'German',
     name: 'Deutsch'
   },
   {
-    iso_639_1: 'uk',
-    english_name: 'Ukrainian',
-    name: 'Український'
+    iso_639_1: 'fr',
+    english_name: 'French',
+    name: 'Français'
   },
   {
     iso_639_1: 'it',

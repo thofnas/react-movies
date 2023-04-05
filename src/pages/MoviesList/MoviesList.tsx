@@ -36,7 +36,6 @@ const MoviesList = () => {
   const appElement = document.getElementsByClassName('App')[0]
 
   const params = paramsToObject(searchParams)
-  console.log(params)
 
   const queryData = useInfiniteQuery({
     queryKey: [type, params],

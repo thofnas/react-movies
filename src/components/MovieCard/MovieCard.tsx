@@ -15,7 +15,9 @@ export default function MovieCard({ poster_path, title, vote_average, id }) {
   let location = useLocation()
   const { type } = useParams()
   const [searchParams] = useSearchParams()
-  const IMAGE_URL = `https://image.tmdb.org/t/p/w500${poster_path}`
+  const IMAGE_URL = poster_path
+    ? `https://image.tmdb.org/t/p/w500${poster_path}`
+    : '/public/images/notFound.png'
   const { data, loading } = usePalette(IMAGE_URL)
 
   const handleMouseEnter = () => {

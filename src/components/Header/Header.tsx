@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
 import useDebounce from '../../hooks/useDebounce'
@@ -16,10 +15,6 @@ export default function Header() {
   const navigate = useNavigate()
   const { type } = useParams()
   const searchInput = useRef<HTMLInputElement>(null)
-
-  const searchButtonHandler = () => {
-    searchInput.current.focus()
-  }
 
   useEffect(() => {
     navigate(`/${type}/list/search?query=${searchInputText}`)
@@ -66,9 +61,6 @@ export default function Header() {
             onChange={(e) => setSearchInputText(e.target.value)}
             placeholder={t('Search any Movies or TV Shows')}
           />
-          <button className='search-btn' onClick={searchButtonHandler}>
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
         </div>
         <div className='header-buttons-container'>
           <NavLink to='/movie'>{t('Movies')}</NavLink>
